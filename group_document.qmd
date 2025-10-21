@@ -24,4 +24,18 @@ print("chello")
 
 Humaira
 
+```{r}
+print("Hello World!")
+```
+
 Joel
+
+```{r}
+print("Hello, it's Joel!")
+```
+
+New feature
+
+```{r}
+print("new feature guys yay")
+```
