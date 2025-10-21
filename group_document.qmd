@@ -5,13 +5,10 @@ editor: visual
 ---
 
 ## Anas
-<<<<<<< HEAD
-=======
 
 ```{r}
 print("Hey there it's Anas")
 ```
->>>>>>> 5401462074dbdd2c3cfc5e54ff26f2b8ecbeecd1
 
 ## Joel
 
@@ -19,7 +16,6 @@ print("Hey there it's Anas")
 
 ## Humaira
 
-<<<<<<< HEAD
 here is some text
 
 ```{r}
@@ -28,7 +24,7 @@ res
 ```
 
 ## Gio
-=======
+
 ## Gio
 
 #### Hey there it's Giosuè
@@ -36,4 +32,3 @@ res
 ```{r}
 print("Hey there it's Giosuè")
 ```
->>>>>>> 5401462074dbdd2c3cfc5e54ff26f2b8ecbeecd1
