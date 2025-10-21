@@ -1,5 +1,19 @@
 ---
 title: "group_document"
 format: html
+editor: visual
 ---
 
+Anas
+
+```{r}
+print ("Hey There its anas")
+```
+
+Gio
+
+Zoja
+
+Humaira
+
+Joel
