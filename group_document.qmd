@@ -44,9 +44,10 @@ New feature
 
 ```{r}
 print("new feature guys yay")
-## New feature
 ```
 
-This is my new cool feature.
+## New feature
 
-print("Cool, huh?") \`\`\`
+print("Cool, huh?")
+
+This is my new cool feature.
