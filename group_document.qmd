@@ -12,6 +12,12 @@ Anas
 print ("Hey There its anas")
 ```
 
+New Analysis\
+
+```{r}
+1+1
+```
+
 Gio
 
 ```{r}
@@ -27,4 +33,11 @@ print("chello")
 Humaira
 
 Joel
+<<<<<<< HEAD
 >>>>>>> 8439c89b5a1506e72f5b24bf9e4b2d37841085a8
+=======
+
+```{r}
+print("Hello, it's Joel!")
+```
+>>>>>>> 2704cb370016720166956851c7ef7b0710f12283
