@@ -29,6 +29,15 @@ print("hey it's zoja")
 
 ## Humaira
 
+here is some text
+
+```{r}
+res <- 1 + 1
+res
+```
+
+## Gio
+
 ## Gio
 
 ## Hey there it's Giosuè
