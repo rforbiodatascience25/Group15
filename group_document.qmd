@@ -31,3 +31,7 @@ print("chello")
 Humaira
 
 Joel
+
+```{r}
+print("Hello, it's Joel!")
+```
