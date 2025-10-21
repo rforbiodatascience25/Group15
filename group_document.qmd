@@ -4,19 +4,19 @@ format: html
 editor: visual
 ---
 
-## Anas 
-
-
+## Anas
 
 ## Joel
 
+## Zoja
 
-## Zoja 
+## Humaira
 
+here is some text
 
-
-## Humaira 
-
-
+```{r}
+res <- 1 + 1
+res
+```
 
 ## Gio
