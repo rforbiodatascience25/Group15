@@ -12,3 +12,9 @@ execute:
   warning: false
   message: false
 ---
+
+# Load data
+
+# Clean data
+
+# Analysis
