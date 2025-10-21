@@ -4,19 +4,18 @@ format: html
 editor: visual
 ---
 
-## Anas 
-
-
+## Anas
 
 ## Joel
 
+## Zoja
 
-## Zoja 
-
-
-
-## Humaira 
-
-
+## Humaira
 
 ## Gio
+
+#### Hey there it's Giosuè
+
+```{r}
+print("Hey there it's Giosuè")
+```
