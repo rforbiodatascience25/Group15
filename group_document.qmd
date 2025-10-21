@@ -10,6 +10,12 @@ Anas
 print ("Hey There its anas")
 ```
 
+New Analysis
+
+```{r}
+2+2
+```
+
 Gio
 
 ```{r}
