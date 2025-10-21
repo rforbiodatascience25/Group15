@@ -22,6 +22,12 @@ Zoja
 print("chello")
 ```
 
+##### New analysis
+
+```{r}
+1+1
+```
+
 Humaira
 
 ```{r}
