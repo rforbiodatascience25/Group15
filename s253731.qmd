@@ -8,3 +8,7 @@ editor: visual
 **Q4:** Discuss in your group what each of the steps did and why they are performed?
 
 We first cloned the repository, then created our files in it. We then committed these to the repository, pulled and pushed. Committing adds it to the local repo, and push then adds the files to the remote repo, and pull adds the files from the remote repo to the local.
+
+**Q5:** Find the `ggplot` GitHub repo again. How many branches there are?
+
+There are currently 13 branches.
