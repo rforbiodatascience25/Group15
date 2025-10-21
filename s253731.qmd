@@ -12,3 +12,19 @@ We first cloned the repository, then created our files in it. We then committed 
 **Q5:** Find the `ggplot` GitHub repo again. How many branches there are?
 
 There are currently 13 branches.
+
+But wait, what was this *Pull request*??? What you actually did, was:
+
+1.  Created a new branch
+
+2.  Completed a new feature/analysis
+
+3.  Pushed the new feature/analysis to GitHub
+
+4.  Created a `Pull request` for merging your branch `STUDENT_ID` into the `main` branch
+
+5.  Approved and completed the `Pull request`
+
+Think about e.g. again the `ggplot2` repo, if anyone could create a new branch and then do as described above, then there would be no way of making quality control. Therefore, typically such pull requests will have to be approved by someone. This can either be someone who is close-to-the-code e.g. in the case of `ggplot2`, that’d be someone like Hadley. In a company, then that might be some senior developer approving junior developers pull requests. At one point you might have seen something like “The main branch is unprotected”, this is exactly that!
+
+The name *Pull request* can be a bit counter-intuitive, because you are not requesting to pull the repository, but rather requesting to the maintainers that *they* pull *your* changes. Maybe, a more intuitive name would have been *Merge request*, which doesn’t leave much room for ambiguity. Actually, in most other `git` repository hosting services aside from GitHub (e.g. GitLab) the equivalent feature is actually called *Merge request*.
