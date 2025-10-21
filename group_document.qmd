@@ -5,7 +5,10 @@ editor: visual
 ---
 
 ## Anas
-<<<<<<< HEAD
+
+```{r}
+print( "Hey its anas")
+```
 
 ## Joel
 
@@ -22,8 +25,7 @@ percent_func(2, 10)
 
 ## Humaira
 
-## Gio
-=======
+# \## Gio
 
 ```{r}
 print("Hey there it's Anas")
@@ -55,4 +57,3 @@ res
 ```{r}
 print("Hey there it's Giosuè")
 ```
->>>>>>> b074dcb14439f4f99e254916c7dad80aa3063efd
