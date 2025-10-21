@@ -44,9 +44,15 @@ New feature
 
 ```{r}
 print("new feature guys yay")
+```
+
 ## New feature
 
+<<<<<<< HEAD
 
 
 print("Cool, huh?")
 ```
+=======
+This is my new cool feature.
+>>>>>>> 604f2adf5d0b216a72127ad948571749c334ef56
