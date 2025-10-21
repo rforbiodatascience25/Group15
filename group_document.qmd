@@ -5,6 +5,7 @@ editor: visual
 ---
 
 ## Anas
+<<<<<<< HEAD
 
 ## Joel
 
@@ -22,3 +23,27 @@ percent_func(2, 10)
 ## Humaira
 
 ## Gio
+=======
+
+```{r}
+print("Hey there it's Anas")
+```
+
+## Joel
+
+## Zoja
+
+```{r}
+print("hey it's zoja")
+```
+
+## Humaira
+
+## Gio
+
+#### Hey there it's Giosuè
+
+```{r}
+print("Hey there it's Giosuè")
+```
+>>>>>>> b074dcb14439f4f99e254916c7dad80aa3063efd
