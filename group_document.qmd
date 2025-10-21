@@ -5,6 +5,25 @@ editor: visual
 ---
 
 ## Anas
+<<<<<<< HEAD
+
+## Joel
+
+```{r}
+percent_func <- function(part, total) {
+ part / total * 100
+}
+
+percent_func(2, 10)
+
+```
+
+## Zoja
+
+## Humaira
+
+## Gio
+=======
 
 ```{r}
 print("Hey there it's Anas")
@@ -13,6 +32,10 @@ print("Hey there it's Anas")
 ## Joel
 
 ## Zoja
+
+```{r}
+print("hey it's zoja")
+```
 
 ## Humaira
 
@@ -32,3 +55,4 @@ res
 ```{r}
 print("Hey there it's Giosuè")
 ```
+>>>>>>> b074dcb14439f4f99e254916c7dad80aa3063efd
