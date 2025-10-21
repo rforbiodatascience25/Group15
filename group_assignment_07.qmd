@@ -1,0 +1,14 @@
+---
+title: "Lab 07 Group Assignment"
+format: html
+editor: visual
+author: 
+ - Palliotto Giosuè (s253716)
+ - Palova Zoja (s225185)
+ - Pålsson Joel Sebastian (s253731)
+ - Humaira Amin (s235423)
+ - Pseudonym Anas Majed (s233381)
+execute:
+  warning: false
+  message: false
+---
