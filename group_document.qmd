@@ -4,19 +4,21 @@ format: html
 editor: visual
 ---
 
-## Anas 
-
-
+## Anas
 
 ## Joel
 
+```{r}
+percent_func <- function(part, total) {
+ part / total * 100
+}
 
-## Zoja 
+percent_func(2, 10)
 
+```
 
+## Zoja
 
-## Humaira 
-
-
+## Humaira
 
 ## Gio
