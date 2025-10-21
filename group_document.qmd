@@ -1,0 +1,22 @@
+---
+title: "group_document"
+format: html
+editor: visual
+---
+
+## Anas 
+
+
+
+## Joel
+
+
+## Zoja 
+
+
+
+## Humaira 
+
+
+
+## Gio
