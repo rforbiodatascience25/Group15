@@ -22,10 +22,16 @@ Zoja
 print("chello")
 ```
 
-Humaira
+# Humaira
 
 ```{r}
 print("Hello World!")
+```
+
+## New feature
+
+```{r}
+print("Nice to meet you.")
 ```
 
 Joel
