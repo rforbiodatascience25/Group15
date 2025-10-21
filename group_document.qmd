@@ -48,6 +48,5 @@ print("new feature guys yay")
 
 This is my new cool feature.
 
-```{r}
 print("Cool, huh?")
 ```
