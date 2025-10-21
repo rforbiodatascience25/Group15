@@ -6,6 +6,10 @@ editor: visual
 
 ## Anas
 
+```{r}
+print("Hey there it's Anas")
+```
+
 ## Joel
 
 ## Zoja
