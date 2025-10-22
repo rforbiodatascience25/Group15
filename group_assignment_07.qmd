@@ -33,6 +33,7 @@ library("broom")
 library("dplyr")
 library("patchwork")
 library("ggplot2")
+library(forcats)
 ```
 
 # Load data
@@ -117,4 +118,71 @@ hist_malignant <- biopsy_long |>
   labs(title = "Attribute histograms for malignant outcomes")
 
 hist_malignant
+```
+
+PCA
+
+```{r PCA_analysis_on_scaled_data}
+
+pca_fit <- biopsy |> 
+  select(where(is.numeric)) |> # retain only numeric columns
+  scale() |> # scale data
+  prcomp() # do PCA
+
+```
+
+Scree plot of variance
+
+```{r scree_plot_variance}
+# Scree plot of variance explained
+var_explained <- pca_fit$sdev^2 / sum(pca_fit$sdev^2)
+
+plot(var_explained,
+     type = "b",
+     xlab = "Principal Component",
+     ylab = "Proportion of Variance Explained",
+     main = "Scree Plot of Variance")
+
+```
+
+PC1 vs PC2 Plot
+
+```{r PC1_vs_PC2}
+
+# combine PCA scores with outcome labels
+pca_scores <- as_tibble(pca_fit$x) |>
+  bind_cols(outcome = biopsy$outcome)
+
+# scatterplot of PC1 vs PC2 colored by outcome
+ggplot(pca_scores, aes(x = PC1, y = PC2, color = outcome)) +
+  geom_point(alpha = 0.7, size = 2) +
+  theme_minimal() +
+  labs(
+    title = "PCA of Breast Biopsy Data",
+    x = paste0("PC1 (", scales::percent(summary(pca_fit)$importance[2,1], accuracy = 1), " variance)"),
+    y = paste0("PC2 (", scales::percent(summary(pca_fit)$importance[2,2], accuracy = 1), " variance)"),
+    color = "Outcome"
+  ) +
+  theme(legend.position = "bottom")
+
+```
+
+Examine loadings on PC1
+
+```{r loadings_for_PC1}
+loadings <- as_tibble(pca_fit$rotation, rownames = "attribute")
+
+loadings |>
+  mutate(attribute = fct_reorder(attribute, PC1)) |>
+  ggplot(aes(attribute, PC1, fill = abs(PC1))) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  scale_fill_viridis_c(option = "turbo") +
+  theme_minimal(base_size = 13) +
+  labs(
+    title = "Variable contributions to PC1",
+    x = NULL,
+    y = "Loading on PC1"
+  )
+
 ```
