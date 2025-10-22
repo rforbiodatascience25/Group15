@@ -13,8 +13,67 @@ execute:
   message: false
 ---
 
+# Background
+
+The dataset originates from Dr. William H. Wolberg at Wisconsin Hospital. Breast tumor biopsies were assessed for 699 patients, and morphological features were noted as nine attributes scored on a scale 1 to 10. These attributes include, for instance, uniform cell size, epithelial cell size, and number of mitoses. The outcome, benign or malignant, is also known.
+
+## Aim
+
+In this report, we aim to investigate if any of the attributes are significantly correlated with a malignant outcome. In order to capture the variation of the data, we will conduct a principal component analysis.
+
+# Load libraries
+
+```{r load_packages}
+#| echo: false
+#| eval: false
+
+library(tidyverse)
+library(broom)
+
+```
+
 # Load data
 
-# Clean data
+```{r load_data}
+#| echo: false
+#| eval: false
+
+biopsy <- read_csv("https://wilkelab.org/classes/SDS348/data_sets/biopsy.csv",
+                   show_col_types = FALSE)
+
+write_csv(x = biopsy,
+          file = "data/biopsy.csv")
+```
+
+# Arrange data
+
+In order to make certain plots, a long format is better. We pivot the data longer, excluding outcome, giving a table with three columns: attribute, value, and outcome.
+
+```{r pivot_long}
+biopsy_long <- biopsy %>% 
+  pivot_longer(cols = !starts_with("o"),
+               names_to = "attribute",
+               values_to = "value")
+  
+```
 
 # Analysis
+
+First, we can plot the average attribute values for the two outcomes to see if any pattern appears. In doing so, we see that all attributes have a higher mean (significance not tested) in malignant outcome, but no other pattern can be discerned.
+
+```{r bar_plot_averages}
+#| fig-cap: "Figure 1: Bar plot of attribute means"
+
+biopsy_long %>%
+  group_by(outcome, attribute) %>% 
+  mutate(value = mean(value)) %>% 
+  ggplot(aes(x = value, y = attribute, fill = outcome)) +
+  geom_col(position = "dodge") +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  labs(title = "Mean attribute value stratified by outcome",
+       x = "Average",
+       y = "Attribute",
+       fill = "Outcome")
+  
+```
