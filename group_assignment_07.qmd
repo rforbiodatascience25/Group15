@@ -1,6 +1,8 @@
 ---
 title: "Lab 07 Group Assignment"
-format: html
+format:
+  html:
+    embed-resources: true
 editor: visual
 author: 
  - Palliotto Giosuè (s253716)
