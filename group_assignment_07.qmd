@@ -28,11 +28,11 @@ In this report, we aim to investigate if any of the attributes are significantly
 ```{r load_packages}
 #| echo: false
 
-library(tidyverse)
-library(broom)
-library(dplyr)
-library(patchwork)
-
+library("tidyverse")
+library("broom")
+library("dplyr")
+library("patchwork")
+library("ggplot2")
 ```
 
 # Load data
@@ -53,7 +53,7 @@ In order to make certain plots, a long format is better. We pivot the data longe
 
 ```{r pivot_long}
 biopsy_long <- biopsy |> 
-  pivot_longer(cols = !starts_with("o"),     #All columns except "outcome"
+  pivot_longer(cols = !starts_with("o"),     # All columns except "outcome"
                names_to = "attribute",
                values_to = "value")
 
@@ -73,14 +73,18 @@ First, we can plot the average attribute values for the two outcomes to see if a
 biopsy_long |>
   group_by(outcome, attribute) |> 
   mutate(value = mean(value)) |> 
-  ggplot(aes(x = value, y = attribute, fill = outcome)) +
-  geom_col(position = "dodge") +
+  ggplot(aes(x = value,
+             y = attribute,
+             fill = outcome,
+             position = "dodge")) +
+  geom_col(alpha = 0.75) +
   theme_minimal() +
+  scale_fill_viridis_d(option = "turbo") + 
   theme(legend.position = "bottom") +
   labs(title = "Mean attribute value stratified by outcome",
        x = "Average",
        y = "Attribute",
-       fill = "Outcome")
+       fill = "Outcome:")
   
 ```
 
@@ -94,6 +98,7 @@ hist_benign <- biopsy_long |>
   ggplot(aes(value)) +
   geom_histogram(bins = 10) +
   facet_wrap(~attribute) +
+  theme_minimal() +
   labs(title = "Attribute histograms for benign outcomes")
 
 hist_benign
@@ -108,6 +113,7 @@ hist_malignant <- biopsy_long |>
   ggplot(aes(value)) +
   geom_histogram(bins = 10) +
   facet_wrap(~attribute, scales = "free_x") +
+  theme_minimal() + 
   labs(title = "Attribute histograms for malignant outcomes")
 
 hist_malignant
