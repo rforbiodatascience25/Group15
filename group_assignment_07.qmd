@@ -1,0 +1,220 @@
+---
+title: "Lab 07 Group Assignment"
+format:
+  html:
+    embed-resources: true
+editor: visual
+author: 
+ - Palliotto Giosuè (s253716)
+ - Palova Zoja (s225185)
+ - Pålsson Joel Sebastian (s253731)
+ - Humaira Amin (s235423)
+ - Anas Majed El Youssef (s233381)
+execute:
+  warning: false
+  message: false
+---
+
+# Background
+
+The dataset originates from Dr. William H. Wolberg at Wisconsin Hospital. Breast tumor biopsies were assessed for 699 patients, and morphological features were noted as nine attributes scored on a scale 1 to 10. These attributes include, for instance, uniform cell size, epithelial cell size, and number of mitoses. The outcome, benign or malignant, is also known.
+
+## Aim
+
+In this report, we aim to investigate if any of the attributes are significantly correlated with a malignant outcome. In order to capture the variation of the data, we will conduct a principal component analysis.
+
+# Load libraries
+
+```{r load_packages}
+#| echo: false
+
+library("tidyverse")
+library("broom")
+library("dplyr")
+library("patchwork")
+library(forcats)
+```
+
+# Load data
+
+```{r load_data}
+#| echo: false
+
+biopsy <- read_csv("https://wilkelab.org/classes/SDS348/data_sets/biopsy.csv",
+                   show_col_types = FALSE)
+
+write_csv(x = biopsy,
+          file = "data/biopsy.csv")
+```
+
+# Arrange data
+
+In order to make certain plots, a long format is better. We pivot the data longer, excluding outcome, giving a table with three columns: attribute, value, and outcome.
+
+```{r pivot_long}
+biopsy_long <- biopsy |> 
+  pivot_longer(cols = !starts_with("o"),     # All columns except "outcome"
+               names_to = "attribute",
+               values_to = "value")
+
+#Get attributes
+attributes <- biopsy_long |> 
+  pull(attribute) |>  
+  unique()
+```
+
+# Analysis
+
+First, we can plot the average attribute values for the two outcomes to see if any pattern appears. In doing so, we see that all attributes have a higher mean (significance not tested) in malignant outcome, but no other pattern can be discerned.
+
+```{r bar_plot_averages}
+#| fig-cap: "Figure 1: Bar plot of attribute means"
+
+biopsy_long |>
+  group_by(outcome, attribute) |> 
+  mutate(value = mean(value)) |> 
+  ggplot(aes(x = value,
+             y = attribute,
+             fill = outcome,
+             position = "dodge")) +
+  geom_col(alpha = 0.75) +
+  theme_minimal() +
+  scale_fill_viridis_d(option = "turbo") + 
+  theme(legend.position = "bottom") +
+  labs(title = "Mean attribute value stratified by outcome",
+       x = "Average",
+       y = "Attribute",
+       fill = "Outcome:")
+  
+```
+
+If we separate the data by outcome and generate histograms for each attribute, as done in figure 2 and 3 below, we can observe a wider distribution of values for all attributes in malignant outcomes, indicating that these cell populations were less homogeneous in appaerence.
+
+```{r histogram_benign}
+#| fig-cap: "Figure 2: Attribute histograms benign outcome"
+
+hist_benign <- biopsy_long |> 
+  filter(outcome == "benign") |> 
+  ggplot(aes(value)) +
+  geom_histogram(bins = 10) +
+  facet_wrap(~attribute) +
+  theme_minimal() +
+  labs(title = "Attribute histograms for benign outcomes")
+
+hist_benign
+
+```
+
+```{r histogram_malignant}
+#| fig-cap: "Figure 3: Attribute histograms malignant outcome"
+
+hist_malignant <- biopsy_long |> 
+  filter(outcome == "malignant") |> 
+  ggplot(aes(value)) +
+  geom_histogram(bins = 10) +
+  facet_wrap(~attribute, scales = "free_x") +
+  theme_minimal() + 
+  labs(title = "Attribute histograms for malignant outcomes")
+
+hist_malignant
+```
+
+PCA
+
+```{r PCA_analysis_on_scaled_data}
+
+pca_fit <- biopsy |> 
+  select(where(is.numeric)) |> # retain only numeric columns
+  scale() |> # scale data
+  prcomp() # do PCA
+
+```
+
+Scree plot of variance
+
+```{r scree_plot_variance}
+# Scree plot of variance explained
+var_explained <- pca_fit$sdev^2 / sum(pca_fit$sdev^2)
+
+plot(var_explained,
+     type = "b",
+     xlab = "Principal Component",
+     ylab = "Proportion of Variance Explained",
+     main = "Scree Plot of Variance")
+
+```
+
+### Variable loadings on PC1 and PC2
+
+In this plot we looked at specific variable correlations. We can clearly see that mitoses have a strong positive loading on PC2, indicating this component reflects variation in cell division. In addition epithelial cell size also shows a positive loading, suggesting a correlation with mitoses - larger cells have higher division activity. High mitotic activity combined with larger cell size is expected in malignant cells. The rest of the variables such as bland chromatin or uniform cell shape contribute negatively to PC2, typical for bening cells.
+
+Most cell morphology variables load similarly on PC1, suggesting that it represents overall variation in shape and size.
+
+```{r variable_loading_on_PC1_and_PC2}
+n_pcs <-2
+loadings_mat <- as_tibble(pca_fit$rotation, rownames = "attribute") %>%
+  select(attribute, paste0("PC", 1:n_pcs)) %>%
+  pivot_longer(cols = starts_with("PC"), names_to = "PC", values_to = "loading")
+
+loadings_mat$attribute <- factor(loadings_mat$attribute, levels = row_order)
+
+
+heat_p<-ggplot(loadings_mat, aes(x = PC, y = attribute, fill = loading)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue",high = "purple", midpoint = 0) +
+  theme_minimal(base_size = 12) +
+  labs(
+    title = paste0("Loadings heatmap (PC1–PC", n_pcs, ")"),
+    x = NULL,
+    y = NULL,
+    fill = "Loading"
+  ) +
+  theme(axis.text.y = element_text(size = 9))
+
+heat_p
+
+
+```
+
+Looking now at the PC1 vs PC2 plot, we can clearly read that PC1 explains 66% of variance and therefore separates benign and malignant cases. Variance of 9% in PC2 is, as previously seen, accounting for higher mitotic activity and epithelial size features, further distinguishing between the two cell types.
+
+```{r PC1_vs_PC2}
+
+# combine PCA scores with outcome labels
+pca_scores <- as_tibble(pca_fit$x) |>
+  bind_cols(outcome = biopsy$outcome)
+
+# scatterplot of PC1 vs PC2 colored by outcome
+ggplot(pca_scores, aes(x = PC1, y = PC2, color = outcome)) +
+  geom_point(alpha = 0.7, size = 2) +
+  theme_minimal() +
+  labs(
+    title = "PCA of Breast Biopsy Data",
+    x = paste0("PC1 (", scales::percent(summary(pca_fit)$importance[2,1], accuracy = 1), " variance)"),
+    y = paste0("PC2 (", scales::percent(summary(pca_fit)$importance[2,2], accuracy = 1), " variance)"),
+    color = "Outcome"
+  ) +
+  theme(legend.position = "bottom")
+
+
+```
+
+Examine loadings on PC1
+
+```{r loadings_for_PC1}
+loadings <- as_tibble(pca_fit$rotation, rownames = "attribute")
+
+loadings |>
+  mutate(attribute = fct_reorder(attribute, PC1)) |>
+  ggplot(aes(attribute, PC1, fill = abs(PC1))) +
+  geom_col(show.legend = FALSE) +
+  coord_flip() +
+  scale_fill_viridis_c(option = "turbo") +
+  theme_minimal(base_size = 13) +
+  labs(
+    title = "Variable contributions to PC1",
+    x = NULL,
+    y = "Loading on PC1"
+  )
+
+```
