@@ -39,3 +39,15 @@ Joel
 ```{r}
 print("Hello, it's Joel!")
 ```
+
+New feature
+
+```{r}
+print("new feature guys yay")
+```
+
+## New feature
+
+print("Cool, huh?")
+
+This is my new cool feature.
