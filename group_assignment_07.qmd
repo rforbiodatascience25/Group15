@@ -145,7 +145,39 @@ plot(var_explained,
 
 ```
 
-PC1 vs PC2 Plot
+### Variable loadings on PC1 and PC2
+
+In this plot we looked at specific variable correlations. We can clearly see that mitoses have a strong positive loading on PC2, indicating this component reflects variation in cell division. In addition epithelial cell size also shows a positive loading, suggesting a correlation with mitoses - larger cells have higher division activity. High mitotic activity combined with larger cell size is expected in malignant cells. The rest of the variables such as bland chromatin or uniform cell shape contribute negatively to PC2, typical for bening cells.
+
+Most cell morphology variables load similarly on PC1, suggesting that it represents overall variation in shape and size.
+
+```{r variable_loading_on_PC1_and_PC2}
+n_pcs <-2
+loadings_mat <- as_tibble(pca_fit$rotation, rownames = "attribute") %>%
+  select(attribute, paste0("PC", 1:n_pcs)) %>%
+  pivot_longer(cols = starts_with("PC"), names_to = "PC", values_to = "loading")
+
+loadings_mat$attribute <- factor(loadings_mat$attribute, levels = row_order)
+
+
+heat_p<-ggplot(loadings_mat, aes(x = PC, y = attribute, fill = loading)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue",high = "purple", midpoint = 0) +
+  theme_minimal(base_size = 12) +
+  labs(
+    title = paste0("Loadings heatmap (PC1–PC", n_pcs, ")"),
+    x = NULL,
+    y = NULL,
+    fill = "Loading"
+  ) +
+  theme(axis.text.y = element_text(size = 9))
+
+heat_p
+
+
+```
+
+Looking now at the PC1 vs PC2 plot, we can clearly read that PC1 explains 66% of variance and therefore separates benign and malignant cases. Variance of 9% in PC2 is, as previously seen, accounting for higher mitotic activity and epithelial size features, further distinguishing between the two cell types.
 
 ```{r PC1_vs_PC2}
 
@@ -164,6 +196,7 @@ ggplot(pca_scores, aes(x = PC1, y = PC2, color = outcome)) +
     color = "Outcome"
   ) +
   theme(legend.position = "bottom")
+
 
 ```
 
