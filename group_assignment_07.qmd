@@ -157,9 +157,6 @@ loadings_mat <- as_tibble(pca_fit$rotation, rownames = "attribute") %>%
   select(attribute, paste0("PC", 1:n_pcs)) %>%
   pivot_longer(cols = starts_with("PC"), names_to = "PC", values_to = "loading")
 
-loadings_mat$attribute <- factor(loadings_mat$attribute, levels = row_order)
-
-
 heat_p<-ggplot(loadings_mat, aes(x = PC, y = attribute, fill = loading)) +
   geom_tile() +
   scale_fill_gradient2(low = "blue",high = "purple", midpoint = 0) +
